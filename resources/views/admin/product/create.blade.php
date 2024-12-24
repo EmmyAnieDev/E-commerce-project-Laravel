@@ -41,7 +41,7 @@
                         </div>
                         <div  class="form-group">
                             <label for="" class="mt-2 mb-2">Colors</label>
-                            <x-select-input name="colors" multiple>
+                            <x-select-input name="colors[]" multiple>
                                 <option value="">Select</option>
                                 <option value="black">Black</option>
                                 <option value="green">Green</option>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductStoreRequest;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -28,7 +29,42 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request)
     {
-        dd($request->all());
+        $product = Product::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'short_description' => $request->short_description,
+            'qty' => $request->qty,
+            'sku' => $request->sku,
+            'description' => $request->description,
+        ]);
+
+        // Store main image
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = $image->store('', 'public');
+            $imagePath = '/uploads/'.$filename;
+            $product->update(['image' => $imagePath]);
+        }
+
+        // Store additional images
+        if ($request->hasFile('images')){
+            $images = $request->file('images');
+            foreach ($images as $image) {
+                $filename = $image->store('', 'public');
+                $imagePath = '/uploads/'.$filename;
+                $product->images()->create(['path' => $imagePath]);
+            }
+        }
+
+        // Store colors
+        if ($request->has('colors')) {
+            foreach ($request->colors as $color) {
+                $product->colors()->create(['name' => trim($color)]);
+            }
+        }
+
+        return redirect()->back();
+
     }
 
     /**
