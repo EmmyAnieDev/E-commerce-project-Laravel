@@ -20,7 +20,7 @@
                     @csrf
 '                    <div class="card-header d-flex justify-content-between">
                         <h5>Create Product</h5>
-                        <a href=" {{ route('dashboard') }} " class="btn btn-primary">Go Back</a>
+                        <a href=" {{ route('products.index') }} " class="btn btn-primary">Go Back</a>
                     </div>
                     <div  class="card-body">
                         <div  class="form-group">
