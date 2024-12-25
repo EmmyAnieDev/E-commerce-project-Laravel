@@ -10,6 +10,7 @@ Route::get('/', [ProductPageController::class, 'index'])->name('home');
 Route::get('/product-details/{id}', [ProductPageController::class, 'show'])->name('product-details');
 
 Route::post('/add-to-cart/{id}', [AddToCartController::class, 'store'])->name('add-to-cart');
+Route::get('/cart', [AddToCartController::class, 'index'])->name('cart');
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');

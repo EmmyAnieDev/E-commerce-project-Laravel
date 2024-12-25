@@ -15,6 +15,13 @@ class AddToCartController extends Controller
         $this->cart = Session::get('cart', []);  // Initialize cart from session or empty array
     }
 
+    public function index()
+    {
+        $products = Session::get('cart', []);
+
+        return view('pages.cart', compact('products'));
+    }
+
     public function store(Request $request, string $id)
     {
         $product = Product::findorFail($id);
