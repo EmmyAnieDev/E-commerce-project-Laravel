@@ -16,4 +16,12 @@ class ProductPageController extends Controller
 
         return view('pages.home', compact('products'));
     }
+
+    function show(String $id) {
+
+        $product = Product::with(['colors', 'images'])->findOrFail($id);
+
+        return view('pages.product-details', compact('product'));
+    }
+
 }

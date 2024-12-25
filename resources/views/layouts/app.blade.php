@@ -13,6 +13,9 @@
     <link rel="stylesheet" href=" {{ asset('assets/css/spacing.css') }}">
     <link rel="stylesheet" href=" {{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href=" {{ asset('assets/css/responsive.css') }}">
+
+    <link rel="stylesheet" href=" {{ asset('assets/css/slick.css') }}">
+    <link rel="stylesheet" href=" {{ asset('assets/css/select2.min.css') }}">
 </head>
 
 <body>
@@ -32,8 +35,14 @@
     <!--plugins js-->
     <script src=" {{ asset('assets/js/tinymce/tinymce.min.js') }}"></script>
 
+    <script src=" {{ asset('assets/js/select2.min.js') }}"></script>
+
+    <script src=" {{ asset('assets/js/slick.min.js') }}"></script>
+
     <!--main/custom js-->
     <script src=" {{ asset('assets/js/main.js') }}"></script>
+
+
 
     {{ $scripts ?? '' }}
 
