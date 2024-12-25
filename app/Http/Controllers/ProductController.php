@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
@@ -65,6 +66,8 @@ class ProductController extends Controller
                 $product->colors()->create(['name' => trim($color)]);
             }
         }
+
+        Cache::forget('products');
 
         return redirect()->back();
 
@@ -147,6 +150,8 @@ class ProductController extends Controller
             }
         }
 
+        Cache::forget('products');
+
         return redirect()->back();
     }
 
@@ -172,6 +177,8 @@ class ProductController extends Controller
 
         # Delete the Product from database
         $product->delete();
+
+        Cache::forget('products');
 
         return redirect()->back();
     }
