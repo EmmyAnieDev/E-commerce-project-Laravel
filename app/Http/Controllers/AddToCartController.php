@@ -46,4 +46,16 @@ class AddToCartController extends Controller
             'cart_count' => count($this->cart)
         ]);
     }
+
+    public function destroy($id)
+    {
+        unset($this->cart[$id]);  // remove the id (key) from the Cart array
+        Session::put('cart', $this->cart); // Update session after removing item
+
+        return response([
+            'status' => 'ok',
+            'message' => 'Item removed from cart',
+            'cart_count' => count($this->cart)
+        ]);
+    }
 }
