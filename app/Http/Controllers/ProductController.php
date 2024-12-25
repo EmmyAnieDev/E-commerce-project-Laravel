@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -82,15 +83,71 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        # Eager load the 'colors' and 'images' relationship along with the product's data
+        $product = Product::with(['colors', 'images'])->findOrFail($id);
+
+        $colors = $product->colors->pluck('name')->toArray();
+
+        return view('admin.product.edit', compact('product', 'colors'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProductUpdateRequest $request, string $id)
     {
-        //
+
+        $product = Product::findOrFail($id);
+
+        $product->update([
+            'name' => $request->name,
+            'price' => $request->price,
+            'short_description' => $request->short_description,
+            'qty' => $request->qty,
+            'sku' => $request->sku,
+            'description' => $request->description,
+        ]);
+
+        // Update main image
+        if ($request->hasFile('image')) {
+
+            // Delete old Image from storage/bucket
+            File::delete(public_path($product->image));
+
+            $image = $request->file('image');
+            $filename = $image->store('', 'public');
+            $imagePath = '/uploads/'.$filename;
+            $product->update(['image' => $imagePath]);
+        }
+
+        // Update additional images
+        if ($request->hasFile('images')){
+
+            foreach ($product->images as $image) {
+                // Delete old Image from storage/bucket
+                File::delete(public_path($image->path));
+                $image->delete();
+            }
+
+            $images = $request->file('images');
+            foreach ($images as $image) {
+                $filename = $image->store('', 'public');
+                $imagePath = '/uploads/'.$filename;
+                $product->images()->create(['path' => $imagePath]);
+            }
+        }
+
+        // Update colors
+        if ($request->has('colors')) {
+
+            $product->colors()->delete();
+
+            foreach ($request->colors as $color) {
+                $product->colors()->create(['name' => trim($color)]);
+            }
+        }
+
+        return redirect()->back();
     }
 
     /**
