@@ -9,6 +9,11 @@
                 <div class="col-lg-6 col-xl-5 wow fadeInLeft">
                     <div class="wsus__product_details_slider_area">
                         <div class="row slider-forFive">
+                            <div class="col-xl-12">
+                                <div class="wsus__product_details_slide_show_img">
+                                    <img src=" {{ asset($product->image) }}" alt="product" class="img-fluid w-100">
+                                </div>
+                            </div>
                             @foreach($product->images as $image)
                                 <div class="col-xl-12">
                                     <div class="wsus__product_details_slide_show_img">
@@ -19,6 +24,11 @@
                         </div>
                         <div class="wsus__product_details_slider">
                             <div class="row slider-navFive">
+                                <div class="col-xl-12">
+                                    <div class="wsus__product_details_slide_show_img">
+                                        <img src=" {{ asset($product->image) }}" alt="product" class="img-fluid w-100" style="height:100px !important; width:100px !important;">
+                                    </div>
+                                </div>
                                 @foreach($product->images as $image)
                                     <div class="col-xl-2">
                                         <div class="wsus__product_details_slider_img">
