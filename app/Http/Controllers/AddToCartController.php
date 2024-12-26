@@ -52,17 +52,17 @@ class AddToCartController extends Controller
         unset($this->cart[$id]);  // remove the id (key) from the Cart array
         Session::put('cart', $this->cart); // Update session after removing item
 
-        return response([
-            'status' => 'ok',
-            'message' => 'Item removed from cart',
-            'cart_count' => count($this->cart)
-        ]);
+        notyf()->success('Product removed from cart');
+
+        return redirect()->back();
     }
 
     public function updateQty(Request $request)
     {
         $this->cart[$request->id]['qty'] = $request->qty; // update the quantity of the cart item
         Session::put('cart', $this->cart);
+
+        notyf()->success('Product quantity updated');
 
         return response([
             'status' => 'ok',

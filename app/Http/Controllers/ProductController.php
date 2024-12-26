@@ -69,6 +69,8 @@ class ProductController extends Controller
 
         Cache::forget('products');
 
+        notyf('Product Created successfully.');
+
         return redirect()->back();
 
     }
@@ -152,6 +154,8 @@ class ProductController extends Controller
 
         Cache::forget('products');
 
+        notyf('Product Updated successfully.');
+
         return redirect()->back();
     }
 
@@ -179,6 +183,8 @@ class ProductController extends Controller
         $product->delete();
 
         Cache::forget('products');
+
+        notyf('Product Deleted successfully.');
 
         return redirect()->back();
     }

@@ -10,3 +10,8 @@
 
 *   _THINGS TO STORE IN THE SESSION_    ====>>   Product's ID, Image, Name, Price, Color, QTY, 
 
+-   To Add Notification when a user adds a product to Cart. run this commands below.
+
+-   composer require php-flasher/flasher-notyf-laravel
+
+-   php artisan flasher:install

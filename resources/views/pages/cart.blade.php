@@ -43,7 +43,7 @@
                                 </td>
 
                                 <td class="pro_tk">
-                                    <h6> {{ $product['price'] * $product['qty'] }} </h6>
+                                    <h6> ${{ $product['price'] * $product['qty'] }} </h6>
                                 </td>
 
                                 <td class="pro_icon">
@@ -68,10 +68,13 @@
                 <div class="row justify-content-between">
                     <div class="col-md-6 col-xl-5 ms-auto">
                         <div class="wsus__cart_list_pricing">
-                            <h6>Total <span>$ 360.00</span></h6>
-                            <p>Tax<span>12%</span></p>
-                            <p>Discount<span>$ 60.00</span></p>
-                            <h5>Sub total<span>$ 300.00</span></h5>
+                            @php
+                                $total = 0;
+                                foreach ($products as $product) {
+                                    $total += $product['price'] * $product['qty'];
+                                }
+                            @endphp
+                            <h6>Total <span>${{ $total }}</span></h6>
                         </div>
                     </div>
                 </div>
@@ -100,10 +103,10 @@
             $(document).ready(function (){
 
                 $('.increment').on('click', function () {
-                    let qty = $('.qty').val();
+                    let qty = $(this).siblings('.qty').val();
                     let id = $(this).data('id');
                     qty = parseInt(qty) + 1;
-                    $('.qty').val(qty);
+                    $(this).siblings('.qty').val();
                     $.ajax({
                         method: 'POST',
                         url: '{{ route('update-qty') }}',
@@ -122,11 +125,11 @@
                 })
 
                 $('.decrement').on('click', function () {
-                    let qty = $('.qty').val();
+                    let qty = $(this).siblings('.qty').val();
                     let id = $(this).data('id');
                     if(qty > 1){
                         qty = parseInt(qty) - 1;
-                        $('.qty').val(qty);
+                        $(this).siblings('.qty').val();
                     }
                     $.ajax({
                         method: 'POST',
