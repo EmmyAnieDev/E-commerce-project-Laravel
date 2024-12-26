@@ -12,6 +12,7 @@ Route::get('/product-details/{id}', [ProductPageController::class, 'show'])->nam
 Route::post('/add-to-cart/{id}', [AddToCartController::class, 'store'])->name('add-to-cart');
 Route::get('/cart', [AddToCartController::class, 'index'])->name('cart');
 Route::delete('/remove-from-cart/{id}', [AddToCartController::class, 'destroy'])->name('remove-from-cart');
+Route::post('/update-qty', [AddToCartController::class, 'updateQty'])->name('update-qty');
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');

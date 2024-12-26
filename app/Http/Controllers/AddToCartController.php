@@ -58,4 +58,16 @@ class AddToCartController extends Controller
             'cart_count' => count($this->cart)
         ]);
     }
+
+    public function updateQty(Request $request)
+    {
+        $this->cart[$request->id]['qty'] = $request->qty; // update the quantity of the cart item
+        Session::put('cart', $this->cart);
+
+        return response([
+            'status' => 'ok',
+            'message' => 'Cart updated successfully!',
+            'cart_count' => count($this->cart)
+        ]);
+    }
 }

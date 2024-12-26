@@ -36,9 +36,9 @@
 
                                 <td class="pro_select">
                                     <div class="quentity_btn">
-                                        <button class="btn btn-danger"><i class="fal fa-minus"></i></button>
-                                        <input type="text" placeholder="1" value="{{ $product['qty'] }}" min="1">
-                                        <button class="btn btn-success"><i class="fal fa-plus"></i></button>
+                                        <button class="btn btn-danger decrement" data-id="{{ $product['id'] }}"><i class="fal fa-minus"></i></button>
+                                        <input type="text" placeholder="1" value="{{ $product['qty'] }}" min="1" class="qty">
+                                        <button class="btn btn-success increment" data-id="{{ $product['id']  }}"><i class="fal fa-plus"></i></button>
                                     </div>
                                 </td>
 
@@ -98,6 +98,52 @@
     <x-slot name="scripts">
         <script>
             $(document).ready(function (){
+
+                $('.increment').on('click', function () {
+                    let qty = $('.qty').val();
+                    let id = $(this).data('id');
+                    qty = parseInt(qty) + 1;
+                    $('.qty').val(qty);
+                    $.ajax({
+                        method: 'POST',
+                        url: '{{ route('update-qty') }}',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            id: id,
+                            qty: qty,
+                        },
+                        success: function (data) {
+                            if( data.status === 'ok' ) {
+                                window.location.reload();
+                            }
+                        },
+                        error: function (xhr, status, error) { },
+                    })
+                })
+
+                $('.decrement').on('click', function () {
+                    let qty = $('.qty').val();
+                    let id = $(this).data('id');
+                    if(qty > 1){
+                        qty = parseInt(qty) - 1;
+                        $('.qty').val(qty);
+                    }
+                    $.ajax({
+                        method: 'POST',
+                        url: '{{ route('update-qty') }}',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            id: id,
+                            qty: qty,
+                        },
+                        success: function (data) {
+                            if( data.status === 'ok' ) {
+                                window.location.reload();
+                            }
+                        },
+                        error: function (xhr, status, error) { },
+                    })
+                })
 
             })
         </script>
