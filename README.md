@@ -15,3 +15,13 @@
 -   composer require php-flasher/flasher-notyf-laravel
 
 -   php artisan flasher:install
+
+
+## Application Screenshots
+
+![Screenshot 1](app_screenshot/screenshot-admin.png)
+*Admin Panel Screenshot*
+
+![Screenshot 2](app_screenshot/screenshot-users.png)
+*User Dashboard Screenshot*
+
